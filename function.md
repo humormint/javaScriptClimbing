@@ -7,14 +7,14 @@
 ```jsx
 // f(x, y) = x + y
 function add(x, y) {
-return x + y;
+  return x + y;
 }
 
 // f(2, 5) = 7
 add(2, 5); // 7
 ```
 
- `add` : 함수 이름
+`add` : 함수 이름
 
 `(x, y)` : 매개 변수(parameter)
 
@@ -26,7 +26,7 @@ add(2, 5); // 7
 
 ```jsx
 function add(x, y) {
-return x + y;
+  return x + y;
 }
 ```
 
@@ -36,7 +36,6 @@ var result = add(2, 5);
 
 // 함수 add에 인수 2, 5를 전달하면서 호출하면반환값 7을 반환한다.
 consol.elog(result); // 7
-
 ```
 
 ## 12.2 함수를 사용하는 이유
@@ -47,14 +46,14 @@ consol.elog(result); // 7
 
 ## 12.3 함수 리터럴
 
-객체를  객체 리터럴로 생성하는 것처럼 함수도 함수 리터럴로 생성할 수 있다.
+객체를 객체 리터럴로 생성하는 것처럼 함수도 함수 리터럴로 생성할 수 있다.
 
 ```jsx
 // 변수에 함수 리터럴을 할당
 
 **var f** = function add(x, y) {
 return x = y;
-}; 
+};
 ```
 
 → 함수는 객체이지만 일반 객체는 홀출할 수 없고 함수는 호출할 수 있다. 그리고 일반 객체에는 없는 ㅎ마수 객체만의 고유한 프로퍼티를 갖는다.
@@ -65,36 +64,36 @@ return x = y;
 
 ```jsx
 function add(x, y) {
-return x + y;
+  return x + y;
 }
 ```
 
 함수 표현식
 
 ```jsx
-var add = function(x, y) {
-return x + y;
+var add = function (x, y) {
+  return x + y;
 };
 ```
 
-Function 생성자 함수 
+Function 생성자 함수
 
 ```jsx
-var add = new Function('x', 'y', 'return x + y');
+var add = new Function("x", "y", "return x + y");
 ```
 
 화살표 함수
 
 ```jsx
-var add = (x, y) => x+y;
+var add = (x, y) => x + y;
 ```
 
 ### 12.4.1 함수 선언문
 
 ```jsx
 //함수 선언문
-function add(x,y) {
-return x + y;
+function add(x, y) {
+  return x + y;
 }
 
 // 함수 참조
@@ -104,7 +103,6 @@ consol.dir(add); // f add(x,y)
 
 // 함수 호출
 console.log(add(2, 5)); // 7
-
 ```
 
 → 함수 리터럴은 함수 이름을 생략할 수 있으나 함수 선언문은 함수 이름을 생략할 수 없다.
@@ -123,33 +121,113 @@ return x + y;
 ```jsx
 // 기명 함수 리터럴을 단독으로 사용하면 함수 선언문으로 해석된다.
 // 함수 선언문에서는 함수 이름을 생략할 수 없다.
-function foo() {console.log('foo');}
+function foo() {
+  console.log("foo");
+}
 foo(); // foo
 
 // 함수 리터럴을 피연산자로 사용하면 하수 선언문이 아니라 함수 리터럴 표현식으로 해석된다.
 // 함수 리터럴에서는 함수 이름을 생략할 수 있다.
-(function bar() {console.log('bar');} );
+(function bar() {
+  console.log("bar");
+});
 bar();
-
 ```
 
-그룹 연산자 `()` 내에 있는 함수리터럴(bar)은 함수 선언문으로 해석되지 않고 험수 리터럴 표현식으로 해석된다. 
+그룹 연산자 `()` 내에 있는 함수리터럴(bar)은 함수 선언문으로 해석되지 않고 험수 리터럴 표현식으로 해석된다.
 
 자바스크립트 엔진은 별도로 생성된 함수 객체를 가리키는 식별자가 필요하다. 따라서 자바스크립트 엔진은 생성된 함수를 호출하기 위해 함수 이름과 동일한 이름의 식별자를 암묵적으로 생성하고, 거기에 함수 객체를 할당한다.
 
-함수는 함수 이름으로 홏ㄹ하는 것이 아니라 함수 객체를 가리키는 식별자로 호출한다.
+함수는 함수 이름으로 호출 하는 것이 아니라 함수 객체를 가리키는 식별자로 호출한다.
 
 ex)
 
 ```jsx
 var add = function add(x, y) {
-return x + y;
+  return x + y;
 };
 console.log(add(2, 5)); // 7
 ```
 
-`var add` 에서 `add` 는 식별자이고 `function add` 에서 `add` 에서 
+`var add` 에서 `add` 는 식별자이고 `function add` 에서 `add` 는 함수 이름이다.
 
 ### 12.4.2 함수 표현식
 
 값의 성질을 갖는 객체를 일급 객체라 한다. 자바스크립트 함수는 일급 객체다.
+
+→ 함수를 값처럼 자유롭게 사용할 수 있다.
+
+```jsx
+// 기명 함수 표현식
+
+var add = function foo(x, y) {
+  return x + y;
+};
+// 함수 객체를 가리키는 식별자로 호출
+console.log(add(2, 5)); //7
+
+// 함수 이름으로 호출하면 에러가 발생한다.
+// 함수 이름은 함수 몸체 내부에서만 유효한 식별자이다.
+```
+
+### 12.4.3 함수 생성 시점과 함수 호이스팅
+
+```jsx
+// 함수 참조
+console.dir(add); // f add(x, y)
+console.dir(sub); // undefined
+
+// 함수 호출
+console.log(add(2, 5)); // 7
+console.log(sub(2, 5)); // typeError
+
+// 함수 선언문
+function add(x, y) {
+  return x + y;
+}
+
+// 함수 표현식
+var sub = function (x, y) {
+  return x - y;
+};
+```
+
+→ 함수 선언문으로 정의한 함수와 함수 표현식으로 정의한 함수의 생성시점이 다르기 때문에 함수 표현식으로 정의한 함수는 함수 표현식 이전에 호출할 수 없다.
+
+→ 함수 선언문이 코드의 선두로 끌어 올려진 것처럼 동작하는 자바스크립트 고유의 특징을 함수 호이스팅이라고 한다.
+
+but, 함수 표현식은 변수에 할당되는 값이 함수 리터럴인 문이다. 따라서 변수할당문의 값은 할당문이 실행되는 시점, 즉 런타임에 평가되므로 함수 표현식의 함수 리터럴도 할당문이 실행되는 시점에서 평가되어 함수 객체가 된다. → 함수 표현식으로 함수를 정의하면 함수 호이스팅이 발생하는 것이 아니라 변수 호이스팅이 발생한다.
+
+### 12.4.4 Function 생성자 함수
+
+```jsx
+var add = new Function("x", "y", "return x + y");
+console.log(add(2, 5)); // 7
+```
+
+### 12.4.5 화살표 함수
+
+→ ES6 에서 도입된 화살표함수는 function 키워드 대신 화살표를 이용해 간단하게 함수를 선언할 수 있다.
+
+```jsx
+// 화살표 함수
+const add = (x, y) => x + y;
+console.log(add(2, 5)); // 7
+```
+
+## 함수 호출
+
+### 매개변수와 인수
+
+함수를 실행하기 위해 필요한 값을 함수 외부에서 함수 내부로 전달할 필요가 있는 경우, 매개변수를 통해 인수를 전달한다. 인수는 값으로 평가될 수 있는 표현식이어야 한다.
+
+```jsx
+// 함수 선언문
+function add(x, y) {
+  return x + y;
+}
+
+// 함수 호출
+// 인수 1과 2개 매개변수 x와 y에 순서대로 할당되고 함수 몸체의 문들이 실행된다.
+var result = add(1, 2);
+```
