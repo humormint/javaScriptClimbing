@@ -228,6 +228,287 @@ function add(x, y) {
 }
 
 // 함수 호출
-// 인수 1과 2개 매개변수 x와 y에 순서대로 할당되고 함수 몸체의 문들이 실행된다.
+// 인수 1과 2가 매개변수 x와 y에 순서대로 할당되고 함수 몸체의 문들이 실행된다.
 var result = add(1, 2);
+```
+
+```jsx
+function add(x, y) {
+  console.log(x, y); // 2 5
+  return x + y;
+}
+
+add(2, 5);
+
+// add 함수의 매개변수 x, y는 함수 몸체 내부에서만 참조할 수 있다.
+console.log(x, y); // ReferenceError: x is not defined
+```
+
+```jsx
+function add(x, y) {
+  return x + y;
+}
+console.log(add(2)); // NaN
+```
+
+→ x에는 인수 2가 전달되지만, 매개변수 y에는 전달할 인수가 없다.
+
+→ x + y는 2 + undefined와 같으므로 NaN이 반환된다.
+
+매개변수보다 인수가 더 많으면 초과된 인수는 무시된다
+
+```jsx
+function add(x, y) {
+  return x + y;
+}
+console.log(add(2, 5, 10)); // 7
+```
+
+→인수 10은 무시된다.
+
+### 12.5.2 인수 확인
+
+```jsx
+function add(x, y) {
+  return x + y;
+}
+console.log(add(2)); // NaN
+console.log(add("a", "b")); // 'ab'
+```
+
+→ 문법상 아무런 문제가 없기 때문에 위와 같이 실행되는 이유
+
+1. 자바스크립트 함수는 매개변수와 인수의 개수가 일치하는지 확인하지 않는다 → 인수 2개가 필요하지만 1개만 있어도 함수를 실행함
+2. 자바스크립트는 동적 타입 언어이기 때문에 매개변수 타입을 사전에 지정할 수 없다.
+
+매개 변수가 많은것은 함수가 여러가지 일을 하는 것이기 때문에 바람직하지 않고 함수는 한 가지 일만 해야하며 가급적 작게 만들어야 한다.
+
+### 12.5.4 반환문
+
+함수는 `return` 키워드와 표현식(반환값)으로 이뤄진 반환문을 사용해 실행 결과를 함수 외부로 반환할 수 있다.
+
+```jsx
+function multiply(x, y) {
+  return x * y; // 반환문
+}
+
+// 함수 호출은 반환값으로 평가된다.
+var result = multiply(3, 5);
+console.log(result); // 15
+```
+
+→ `multiply` 함수는 두 개의 인수를 전달받아 곱한 결과값을 `return` 키워드를 사용해 반환한다. 함수는 `return` 키워드를 사용해 자바스크립트에서 사용 가능한 모든 값을 반환 할 수 있다. 함수 호출은 표현식이다.
+
+반환문의 역할
+
+1. 함수의 실행을 중단하고 함수 몸체를 빠져 나간다. → 반환문 이후에 다른 문이 존재하면 그 문은 실행되지 않고 무시된다.
+2. 반환문은 return 키워드 뒤에 오는 표현식을 평가해 반환한다.
+
+```jsx
+function multiply(x, y) {
+  return x * y; // 반환문
+  // 반환문 이후에 다른 문이 존재하면 그 문은 실행되지 않고 무시된다.
+  console.log("실행되지 않는다.");
+}
+
+// 함수 호출은 반환값으로 평가된다.
+var result = multiply(3, 5);
+console.log(result); // 15
+```
+
+반환문은 생략할 수 있으며 생략하면 암묵적으로 undefined가 반환된다.
+
+```jsx
+function foo() {
+  // 반환문을 생략하면 암묵적으로 undefined가 반환된다.
+}
+
+console.log(foo()); // undefined
+```
+
+## 12.6 참조에 의한 전달과 외부 상태의 변경
+
+```jsx
+// 매개 변수 primitive는 원시 값을 전달 받고, 매개변수 obj는 객체를 전달 받는다.
+function changeVa(primitive, obj) {
+  primitive += 100;
+  obj.name = "Kim";
+}
+
+// 외부 상태
+var num = 100;
+var person = { name: "Lee" };
+
+console.log(num); // 100
+console.log(person); // {name: "Lee"}
+
+// 원시 값은 값 자체가 복사되어 전달되고 객체는 참조 값이 복사되어 전달된다.
+changeVal(num, person);
+
+// 원시 값은 원본이 훼손되지 않는다.
+console.log(num); // 100
+
+// 객체는 원본이 훼손된다.
+console.log(person); // {name: "Kim"}
+```
+
+→ `changeVal` 함수는 매개변수를 통해 전달 받은 원시 타입 인수와 객체 타입 인수를 함수 몸체에서 변경한다.
+
+재할당을 통해 할당된 원시 값을 새로운 원시값으로 교체했고, 객체 타입 인수를 전달 받은 매개변수 obj의 경우, 객체는 변경 가능한 값이므로 직접 변경할 수 있기 때문에 재할당 없이 직접 할당된 객체를 변경했다.
+
+## 12.7 다양한 함수의 형태
+
+### 12.7.2 재귀함수
+
+→ 재귀 함수는 자기 자신을 호출하는 함수를 말한다.
+
+ex) 10부터 0까지 출력하는 함수
+
+```jsx
+function countdown(n) {
+  for (var i = n; i >= 0; i--) console.log(i);
+}
+
+console.log(10);
+```
+
+→ 반복문 없이 재귀 함수를 사용하여 구현할 수 있다
+
+```jsx
+function countdown(n) {
+  if (n < 0) return;
+  console.log(n);
+  countdown(n - 1); // 재귀 호출
+}
+
+console.log(10);
+```
+
+재귀함수를 이용하면 팩토리얼을 간단히 구현할 수 있다.
+
+```jsx
+function factorial(n) {
+  //탈출조건: n이 1 이하일 때 재귀 호출을 멈춘다.
+  if (n <= 1) return 1;
+  // 재귀 호출
+  return n * factorial(n - 1);
+}
+console.log(factorial(5)); //120
+```
+
+### 12.7.3 중첩함수
+
+```jsx
+function outer() {
+  var x = 1;
+
+  // 중첩함수
+  function inner() {
+    var y = 2;
+    // 외부 함수의 변수를 참조할 수 있다.
+    console.log(x + y); // 3
+  }
+  inner();
+}
+outer();
+```
+
+### 12.7.4 콜백함수
+
+```jsx
+// n만큼 어떤 일을 반복한다.
+function repeat(n) {
+  // i를 출력
+  for (var i = 0; i < n; i++) console.log(i);
+}
+repeat(5); // 0 1 2 3 4
+```
+
+→ `repeat` 함수는 매개변수를 통해 전달 받은 숫자 만큼 반복하여 `console.log(i)` 를 호출한다.
+
+→ `repeat` 함수는 `console.log(i)` 에 강하게 의존하고 있어 다른 일을 할 수 없다. 다른 일을 부여하기 위해서는 함수를 새롭게 정의해야 한다.
+
+```jsx
+// n만큼 어떤 일을 반복한다.
+function repeat1(n) {
+  // i를 출력
+  for (var i = 0; i < n; i++) console.log(i);
+}
+repeat1(5); // 0 1 2 3 4
+
+// n만큼 어떤 일을 반복한다. (0부터 4까지 숫자중 홀수만 출력하고 싶을 때)
+function repeat2(n) {
+  for (var i = 0; i < n; i++) {
+    // i가 홀수일 때만 출력한다.
+    if (i % 2) console.log(i);
+  }
+}
+repeat2(5); // 1 3
+```
+
+→ 함수의 합성으로 해결할 수 있다.
+
+→ 함수의 공통된 로직은 미리 정의해 두고, 변경되는 로직은 추상화해서 함수 외부에서 내부로 전달하는 것이다.
+
+```jsx
+// 외부에서 전달받은 f를 n만큼 반복 호출한다.
+function repeat(n, f) {
+  for (var i = 0; i < n; i++) {
+    f(i); //i를 전달하면서 f를 호출
+  }
+}
+var logAll = function (i) {
+  console.log(i);
+};
+
+// 반복 호출할 함수를 인수로 전달한다.
+repeat(5, logAll); // 0 1 2 3 4
+
+var logOdds = function (i) {
+  if (i % 2) console.log(i);
+};
+// 반복 호출할 함수를 인수로 전달한다.
+repeat(5, logOdds); // 1 3
+```
+
+→ `repeat` 함수는 변경되는 일을 함수 f로 추상화 했고 이를 외부에서 전달 받는다.
+
+→ 이처럼 함수의 매개변수를 통해 다른 함수의 내부로 전달되는 함수를 콜백함수라고 하며, 매개변수를 통해 함수의 외부에서 콜백함수를 전달받은 함수를 고차 함수라고 한다.
+
+→ 고차함수는 콜백함수를 자신의 일부분으로 합성한다. → 콜백함수는 고차함수에 의해 호출되며 이때 고차함수는 필요에 따라 콜백함수에 인수를 전달할 수 있다.
+
+→ 콜백함수는 비동기 처리, 배열 고차함수에서도 중요하게 사용된다.
+
+### 12.7.5 순수함수와 비순수 함수
+
+```jsx
+var count = 0; // 현재 카운트를 나타내는 상태
+
+// 순수함수 increase는 동일한 인수가 전달되면 언제나 동일한 값을 반환한다.
+function increase(n) {
+  return ++n;
+}
+
+// 순수 함수가  반환한 결과값을 변수에 재할당해서 상태를 변경
+count = increase(count);
+console.log(count); // 1
+
+count = increase(count);
+console.log(count); // 2
+```
+
+```jsx
+var count = 0; // 현재 카운트를 나타내는 상태
+
+// 비순수 함수
+function increase() {
+  return ++count;
+}
+
+// 비순수함수는 외부상태(count)를 변경하므로 상태 변화를 추적하기 어려워진다.
+count = increase();
+console.log(count); // 1
+
+count = increase();
+console.log(count); // 2
 ```
