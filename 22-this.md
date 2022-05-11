@@ -1,5 +1,3 @@
-# 22장 this
-
 ### 22.1 this 키워드
 
 메서드(객체 내부의 함수)가 자신이 속한 객체의 프로퍼티를 참조하려면 자신이 속한 객체를 가리키는 식별자를 참조할 수 있어야 한다.
@@ -133,17 +131,15 @@ var bruce = {
 
 peter.sayName.apply(bruce, ['batman', 'richman']); // Bruce Wayne is batman or richman
 
-/* peter.sayName.apply(bruce, ['batman', 'richman']) 의 결과가 무엇이 될지 생각해보고 
-apply 를 call로 바꾸어 호출했을 때와 비교해 봅시다. */
+peter.sayName.call(bruce, ['batman', 'richman']); // Bruce Wayne is batman,richman or undefined
+
 ```
 
 **bind()**
 
-`bind()` 는 this가 고정된 새로운 함수를 반환합니다.
+`bind()` 는 this가 고정된 새로운 함수를 반환한다.
 
-`peter.sayName()` → peter가 아니라 bruce가 출력, why? peter변수에  `sayName : sayName.bind(bruce)` 이기 때문에 bruce에 속박됨
-
-→ 바인드는 신분도용이다.
+`peter.sayName()` → peter가 아니라 bruce가 출력, why? peter변수에  `sayName : sayName.bind(bruce)` 이기 때문에 bruce에 속박된다.
 
 ```jsx
 function sayName(){
@@ -163,9 +159,4 @@ var peter = {
 peter.sayName(); // bruce
 bruce.sayName(); // bruce
 
-/* peter.sayName() 과 bruce.sayName() 의 결과 값이 무엇이 될지 생각해봅시다. */
 ```
-
----
-
-다음과 같이 콜백의 this가 전역을 바라보고 있지 않은 경우도 있습니다.
