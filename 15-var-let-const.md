@@ -12,7 +12,9 @@
 
 `var`
 
-→ 재선언 O, 재할당 O, 범위 : function
+→ 재선언 O, 재할당 O, 범위 function
+
+<br>
 
 ### 15.1.1 변수 재선언(중복 선언) 허용
 
@@ -21,6 +23,8 @@
   var 이름 = 'park'
 이름 // 'park' // 재선언 가능
 ```
+
+<br>
 
 변수 재할당도 가능
 
@@ -33,6 +37,8 @@
 → `var 이름` →  `이름 = 'kim'` , `이름 = 'park` → 할당
 
 →  `var 이름 = 'kim'` 해놓고 `이름 = 'chae'` → 재할당 가능
+
+<br>
 
 ### 15.1.2 함수 레벨 스코프
 
@@ -71,17 +77,22 @@ console.log(이름); // 호준님
 
 ```jsx
 let 나이 = 20;
-let 나이 = 30; // 에러, 재선언 불가
+let 나이 = 30; // error // 재선언 불가
 ```
 
 ```jsx
-if (true) {
-            let 이름 = 'park'
-        }
-        for(let v = 1){
-            
-        }
+let 이름 ='지훈'
+
+if(true){
+let 이름 = '영웅'
+let 성 ='채'
+console.log(이름) // 영웅
+}
+console.log(이름); // 지훈
+console.log(성); // ReferenceError: 성 is not defined
 ```
+
+let 키워드로 선언한 변수는 모든 코드블록(함수, if문, for문 ...)을 지역 스코프로 인정하는 블록 레벨 스코프를 따른다.
 
 <br>
 
