@@ -21,7 +21,7 @@
 ### 15.1.1 변수 재선언(중복 선언) 허용
 
 ```jsx
-	var 이름 = 'kim'; 
+  var 이름 = 'kim'; 
   var 이름 = 'park'
 console.log(이름) // park // 재선언 가능
 ```
@@ -30,7 +30,7 @@ console.log(이름) // park // 재선언 가능
 변수 재할당도 가능
 
 ```jsx
-	var 이름 = 'kim'; 
+  var 이름 = 'kim'; 
   var 이름 = 'park'
 	이름 = 'chae' // 재할당 
 console.log(이름) // chae
