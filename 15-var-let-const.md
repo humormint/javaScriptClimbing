@@ -4,7 +4,9 @@
 | --- | --- | --- | --- |
 | 재선언 | O | X | X |
 | 재할당 | O | O | X |
-| 범위 |  function | 블록레벨 | 블록레벨 |
+| 스코프 |  function | 블록레벨 | 블록레벨 |
+
+블록레벨 스코프: 모든 코드블록(함수, if 문, for문 ...)을 지역 스코프로 인정하는 스코프
 
 <br>
 
@@ -21,17 +23,16 @@
 ```jsx
 	var 이름 = 'kim'; 
   var 이름 = 'park'
-이름 // 'park' // 재선언 가능
+console.log(이름) // park // 재선언 가능
 ```
-
-<br>
 
 변수 재할당도 가능
 
 ```jsx
 	var 이름 = 'kim'; 
   var 이름 = 'park'
-이름 = 'chae' // 재할당 
+	이름 = 'chae' // 재할당 
+console.log(이름) // chae
 ```
 
 → `var 이름` →  `이름 = 'kim'` , `이름 = 'park` → 할당
@@ -48,10 +49,11 @@ var로 선언한 변수는 함수의 코드 블록만을 지역 스코프로 인
 
 ```jsx
 function 함수() {
-            var 이름 = 'kim'; // function안에서만 존재
-            이름;
-        }
-        이름; // error
+  var 이름 = 'kim'; // function안에서만 존재
+  console.log(이름);  // kim
+}
+console.log(이름); // ReferenceError: 이름 is not defined
+함수()
 ```
 
 → 함수 외부에서 var로 선언한 변수는 코드 블록 내에서 선언해도 모두 전역 변수가 된다.
@@ -117,3 +119,12 @@ console.log(사람) // {이름 : park}
 ```
 
 → const 키워드는 재할당을 금지할 뿐 “불변"을 의미하지 않는다.
+
+<br>
+
+## 15.4 var vs. let vs. const
+
+변수 선언은 기본적으로 const를 사용하고 let은 재할당이 가능한 경우에 한정해서 사용하는 것이 좋다. 
+
+- ES6 사용 → var을 사용하지 않는다.
+- 재할당이 필요한 경우에 한해 let 사용, 이때 변수의 스코프는 최대한 좁게!
