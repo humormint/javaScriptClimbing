@@ -176,7 +176,7 @@ console.log(아버지1);
 ```
 
 <details>
-<summary>`console.log(아버지1)`</summary>
+<summary>console.log(아버지1)</summary>
 <div markdown="1">
 
  ```jsx
